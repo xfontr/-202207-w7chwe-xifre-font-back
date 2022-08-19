@@ -9,8 +9,8 @@
     "start": "node .",
     "start:dev": "nodemon -q",
     "prepare": "husky install",
-    "test": "jest src --watchAll=false --passWithNoTests",
-    "test-coverage": "jest src --coverage --watchAll=false --passWithNoTests"
+    "test": "jest src --watchAll=false",
+    "test-coverage": "jest src --coverage --watchAll=false"
   },
   "keywords": [],
   "author": "",
