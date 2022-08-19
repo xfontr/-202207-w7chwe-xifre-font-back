@@ -2,7 +2,7 @@ import "./loadEnvironment";
 import Debug from "debug";
 import chalk from "chalk";
 import startServer from "./server/startServer";
-import connectDB from "./database/connectDB";
+import connectDB from "./database";
 
 const debug = Debug("users:index");
 
