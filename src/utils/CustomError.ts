@@ -13,8 +13,8 @@ export class CustomError extends Error implements ICustomError {
   constructor(code: number, publicMessage: string, privateMessage: string) {
     super();
 
-    this.code = code ?? 500;
+    this.code = code;
     this.message = publicMessage;
-    this.privateMessage = privateMessage ?? "";
+    this.privateMessage = privateMessage;
   }
 }

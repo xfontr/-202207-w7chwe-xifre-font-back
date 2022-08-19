@@ -30,6 +30,9 @@
 - contacts{}
   - enemies: String[],
   - friends: String[],
-  - log: ["New relationship: <User1> & <User2> (friends)",
-    "New relationship: <User1> & <User2> (enemies)",
-    "Removed relationship: <User1> & <User2>"]
+
+[LOG]
+
+["New relationship: <User1> & <User2> (friends)",
+"New relationship: <User1> & <User2> (enemies)",
+"Removed relationship: <User1> & <User2>"]
