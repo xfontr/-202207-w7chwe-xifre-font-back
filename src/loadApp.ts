@@ -7,14 +7,14 @@ import generalError from "./middlewares/generalError";
 
 const app = express();
 
-app.disable("x-powered-by");
+// app.disable("x-powered-by");
 
 app.use(cors());
-app.use(express.json());
 app.use(morgan("dev"));
+app.use(express.json());
 
 /* ROUTES */
-app.use(usersRouter);
+app.use("/users", usersRouter);
 
 app.use(generalError);
 
