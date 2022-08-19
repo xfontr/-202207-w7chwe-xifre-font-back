@@ -7,7 +7,7 @@
 
 [GET]
 
-/users/ - Will send a list with all the users in the database
+/users - Will send a list with all the users in the database
 
 /users/:id/friends - Will send a list with all the friends the user by Id has
 /users/:id/enemies - Will send a list with all the enemies the user by Id has
@@ -30,6 +30,9 @@
 - contacts{}
   - enemies: String[],
   - friends: String[],
-  - log: ["New relationship: <User1> & <User2> (friends)",
-    "New relationship: <User1> & <User2> (enemies)",
-    "Removed relationship: <User1> & <User2>"]
+
+[LOG]
+
+["New relationship: <User1> & <User2> (friends)",
+"New relationship: <User1> & <User2> (enemies)",
+"Removed relationship: <User1> & <User2>"]
