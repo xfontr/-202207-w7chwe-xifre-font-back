@@ -27,7 +27,7 @@ export const userSchema = new Schema({
     type: String,
     required: true,
   },
-  biopraphy: {
+  biography: {
     type: String,
     required: true,
   },

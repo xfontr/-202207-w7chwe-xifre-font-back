@@ -13,7 +13,7 @@ const database = process.env.MONGO_DB;
   debug(chalk.bgCyan("Initiating server"));
   try {
     await connectDB(database);
-    startServer(port);
+    await startServer(port);
   } catch (error) {
     process.exit(1);
   }
