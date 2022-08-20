@@ -132,7 +132,7 @@ export const allUsersData = async (
   try {
     dbUsers = await User.find({});
 
-    if (!dbUsers) {
+    if (!dbUsers.length) {
       throw new Error();
     }
   } catch (error) {

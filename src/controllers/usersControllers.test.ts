@@ -93,7 +93,6 @@ describe("Given a userData function (controller)", () => {
 
   const req = {
     params: { id: "" },
-    body: mockUser,
   } as Partial<Request>;
 
   const res = {
