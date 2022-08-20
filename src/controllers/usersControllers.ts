@@ -119,7 +119,29 @@ export const userData = async (
     return;
   }
 
-  dbUser.password = "#";
-
   res.status(200).json({ user: dbUser });
+};
+
+export const allUsersData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let dbUsers: IUser[];
+
+  try {
+    dbUsers = await User.find({});
+
+    if (!dbUsers) {
+      throw new Error();
+    }
+  } catch (error) {
+    customError.code = 400;
+    customError.message = error.message;
+    customError.privateMessage = "No users found";
+    next(customError);
+    return;
+  }
+
+  res.status(200).json({ users: dbUsers });
 };
