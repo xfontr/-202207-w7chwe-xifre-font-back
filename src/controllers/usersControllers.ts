@@ -87,7 +87,7 @@ export const signIn = async (
     }
   } catch (error) {
     customError.code = 400;
-    customError.message = error.message;
+    customError.message = "Invalid username or password";
     customError.privateMessage = "Password not correct";
     next(customError);
     return;

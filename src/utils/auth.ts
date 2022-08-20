@@ -13,5 +13,8 @@ export const hashCompare = (
   hash: string
 ): Promise<boolean> => bcrypt.compare(dataToCompare, hash);
 
-export const createToken = (payload: Payload): string =>
-  jwt.sign(payload, process.env.SECRET);
+export const createToken = (payload: Payload): string => {
+  console.log(process.env.SECRET);
+  console.log(process.env.MONGO_DB);
+  return jwt.sign(payload, process.env.SECRET);
+};
