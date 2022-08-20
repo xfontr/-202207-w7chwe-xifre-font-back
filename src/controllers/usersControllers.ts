@@ -90,6 +90,7 @@ export const signIn = async (
     customError.message = error.message;
     customError.privateMessage = "Password not correct";
     next(customError);
+    return;
   }
 
   res.status(200).json(prepareToken(dbUser[0]));
