@@ -14,4 +14,4 @@ export const hashCompare = (
 ): Promise<boolean> => bcrypt.compare(dataToCompare, hash);
 
 export const createToken = (payload: Payload): string =>
-  jwt.sign(payload, process.env.SECRET);
+  jwt.sign(payload, process.env.AUTH_SECRET || "qwerty");
