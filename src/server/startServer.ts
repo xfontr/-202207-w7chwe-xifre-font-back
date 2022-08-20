@@ -1,6 +1,6 @@
 import Debug from "debug";
 import chalk from "chalk";
-import app from "../loadApp";
+import app from ".";
 
 const debug = Debug("users:server/startServer");
 

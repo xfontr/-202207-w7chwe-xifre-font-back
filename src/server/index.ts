@@ -1,13 +1,13 @@
-import "./loadEnvironment";
+import "../loadEnvironment";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import usersRouter from "./server/routers/usersRouter";
-import generalError from "./middlewares/generalError";
+import usersRouter from "./routers/usersRouter";
+import generalError from "../middlewares/generalError";
 
 const app = express();
 
-// app.disable("x-powered-by");
+app.disable("x-powered-by");
 
 app.use(cors());
 app.use(morgan("dev"));
