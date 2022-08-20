@@ -16,3 +16,7 @@ jobs:
 
       - name: Testing
         run: npm test
+
+        env:
+          MONGO_DB: ${{ env.MONGO_DB }}
+          SECRET: ${{ env.0r147n396DeS8f0n74 }}
