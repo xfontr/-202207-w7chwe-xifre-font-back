@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../database/models/User";
 import mockUser from "../mocks/mockUser";
-import { signIn, signUp, userData } from "./usersControllers";
+import { allUsersData, signIn, signUp, userData } from "./usersControllers";
 
 const mockHashCompare = jest.fn().mockReturnValue(true);
 
@@ -93,7 +93,6 @@ describe("Given a userData function (controller)", () => {
 
   const req = {
     params: { id: "" },
-    body: mockUser,
   } as Partial<Request>;
 
   const res = {

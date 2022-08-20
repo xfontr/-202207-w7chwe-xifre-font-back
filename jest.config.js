@@ -9,6 +9,6 @@ module.exports = {
     "!src/server/startServer.ts",
     "!src/server/index.ts",
     "!src/loadEnvironment.ts",
-    "!src/database/*",
+    "!src/database/**/*.ts",
   ],
 };
