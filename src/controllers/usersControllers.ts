@@ -95,3 +95,31 @@ export const signIn = async (
 
   res.status(200).json(prepareToken(dbUser[0]));
 };
+
+export const userData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  let dbUser: IUser;
+
+  try {
+    dbUser = await User.findById(id);
+
+    if (!dbUser) {
+      throw new Error();
+    }
+  } catch (error) {
+    customError.code = 400;
+    customError.message = error.message;
+    customError.privateMessage = "User not found";
+    next(customError);
+    return;
+  }
+
+  dbUser.password = "#";
+
+  res.status(200).json({ user: dbUser });
+};
