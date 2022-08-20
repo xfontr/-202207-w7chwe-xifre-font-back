@@ -1,4 +1,5 @@
-import { hashCompare, hashCreate } from "./auth";
+import Payload from "../types/payload";
+import { createToken, hashCompare, hashCreate } from "./auth";
 
 describe("Given a hasCreate function", () => {
   describe("When instantiated with a string as an argument", () => {
@@ -15,7 +16,7 @@ describe("Given a hasCreate function", () => {
 });
 
 describe("Given a hasCompare function", () => {
-  describe("When instantiated a password and a string", () => {
+  describe("When called a password and a string", () => {
     test("Then it should return false if the password doesn't match the second string", async () => {
       const password = "admin";
 
@@ -31,6 +32,22 @@ describe("Given a hasCompare function", () => {
       const result = await hashCompare(password, hash);
 
       expect(result).toBe(true);
+    });
+  });
+});
+
+describe("Given a createToken function", () => {
+  describe("When called with a payload as an argument", () => {
+    test("Then it should return a signed token", () => {
+      const minExpectedSignLength = 20;
+      const mockToken: Payload = {
+        id: "1234",
+        name: "aaa",
+      };
+
+      const result = createToken(mockToken);
+
+      expect(result.length > minExpectedSignLength).toBe(true);
     });
   });
 });

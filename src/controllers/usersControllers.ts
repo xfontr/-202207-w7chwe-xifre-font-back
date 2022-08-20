@@ -3,7 +3,7 @@ import Debug from "debug";
 import chalk from "chalk";
 import { User } from "../database/models/User";
 import { LoginData, RegisterUser, IUser } from "../types/users";
-import { hashCreate } from "../utils/auth";
+import { hashCompare, hashCreate } from "../utils/auth";
 import { CustomError } from "../utils/CustomError";
 
 const debug = Debug("users:controllers/userControllers");
@@ -57,7 +57,24 @@ export const signIn = async (
     customError.message = error.message;
     customError.privateMessage = "User not found";
     next(customError);
+    return;
   }
 
   const dbPassword = dbUser[0].password;
+  let isPasswordCorrect: boolean;
+
+  try {
+    isPasswordCorrect = await hashCompare(userToLogin.password, dbPassword);
+
+    if (!isPasswordCorrect) {
+      throw new Error();
+    }
+  } catch (error) {
+    customError.code = 400;
+    customError.message = error.message;
+    customError.privateMessage = "Password not correct";
+    next(customError);
+  }
+
+  // res.status(200).json(prepareToken(dbUser[0]));
 };
