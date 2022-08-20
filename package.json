@@ -1,11 +1,12 @@
 {
-  "name": "app-name",
+  "name": "users",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "ts": "tsc",
     "ts:dev": "tsc -w",
+    "build": "npm run ts",
     "start": "node .",
     "start:dev": "nodemon -q",
     "prepare": "husky install",
@@ -47,5 +48,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
     "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "^18.x"
   }
 }
