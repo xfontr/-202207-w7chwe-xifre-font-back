@@ -8,22 +8,22 @@ jest.mock("../utils/auth", () => ({
   hashCreate: () => jest.fn().mockReturnValue("#"),
 }));
 
+const status = 200;
+
+const req = {
+  body: mockUser,
+} as Partial<Request>;
+
+const res = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+} as Partial<Response>;
+
+const next = jest.fn() as NextFunction;
+
+User.create = jest.fn().mockReturnValue(mockUser);
+
 describe("Given a signUp function (controller)", () => {
-  const status = 200;
-
-  const req = {
-    body: mockUser,
-  } as Partial<Request>;
-
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-  } as Partial<Response>;
-
-  const next = jest.fn() as NextFunction;
-
-  User.create = jest.fn().mockReturnValue(mockUser);
-
   describe("When called with a request, a response and a next function as arguments", () => {
     test("It should call status with a code of 200", async () => {
       await signUp(req as Request, res as Response, next);
@@ -36,5 +36,11 @@ describe("Given a signUp function (controller)", () => {
 
       expect(res.json).toHaveBeenCalled();
     });
+  });
+});
+
+describe("Given a signIn function (controller)", () => {
+  describe("Wehn called with a request, a response and a next function as arguments", () => {
+    test("It should call status with a code of 200", () => {});
   });
 });

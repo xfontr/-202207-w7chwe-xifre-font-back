@@ -3,12 +3,28 @@ import Debug from "debug";
 import chalk from "chalk";
 import { User } from "../database/models/User";
 import { LoginData, RegisterUser, IUser } from "../types/users";
-import { hashCompare, hashCreate } from "../utils/auth";
+import { createToken, hashCompare, hashCreate } from "../utils/auth";
 import { CustomError } from "../utils/CustomError";
+import Payload from "../types/payload";
 
 const debug = Debug("users:controllers/userControllers");
 
 const customError = new CustomError(null, undefined, undefined);
+
+const prepareToken = (user: IUser) => {
+  const payload: Payload = {
+    id: user.id,
+    name: user.name,
+  };
+
+  const token: string = createToken(payload);
+
+  return {
+    user: {
+      token,
+    },
+  };
+};
 
 export const signUp = async (
   req: Request,
@@ -76,5 +92,5 @@ export const signIn = async (
     next(customError);
   }
 
-  // res.status(200).json(prepareToken(dbUser[0]));
+  res.status(200).json(prepareToken(dbUser[0]));
 };
