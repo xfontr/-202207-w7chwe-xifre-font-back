@@ -1,8 +1,17 @@
+import "../loadEnvironment";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Payload from "../types/payload";
 
-const hashCreate = (password: string): Promise<string> => {
+export const hashCreate = (password: string): Promise<string> => {
   const salt = 10;
   return bcrypt.hash(password, salt);
 };
 
-export default hashCreate;
+export const hashCompare = (
+  dataToCompare: string,
+  hash: string
+): Promise<boolean> => bcrypt.compare(dataToCompare, hash);
+
+export const createToken = (payload: Payload): string =>
+  jwt.sign(payload, process.env.AUTH_SECRET || "qwerty");
