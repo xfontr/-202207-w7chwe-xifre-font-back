@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../database/models/User";
 import mockUser from "../mocks/mockUser";
-import signUp from "./usersControllers";
+import { signUp } from "./usersControllers";
 
-jest.mock("../utils/auth", () => () => ({
+jest.mock("../utils/auth", () => ({
+  ...jest.requireActual("../utils/auth"),
   hashCreate: () => jest.fn().mockReturnValue("#"),
 }));
 

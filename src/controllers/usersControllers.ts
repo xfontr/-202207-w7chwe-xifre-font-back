@@ -2,15 +2,19 @@ import { NextFunction, Request, Response } from "express";
 import Debug from "debug";
 import chalk from "chalk";
 import { User } from "../database/models/User";
-import { RegisterUser } from "../types/users";
-import hashCreate from "../utils/auth";
+import { LoginData, RegisterUser, IUser } from "../types/users";
+import { hashCreate } from "../utils/auth";
 import { CustomError } from "../utils/CustomError";
 
 const debug = Debug("users:controllers/userControllers");
 
 const customError = new CustomError(null, undefined, undefined);
 
-const signUp = async (req: Request, res: Response, next: NextFunction) => {
+export const signUp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const userToRegister: RegisterUser = req.body;
 
   let newUser;
@@ -34,4 +38,26 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ newUser });
 };
 
-export default signUp;
+export const signIn = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userToLogin: LoginData = req.body;
+  let dbUser: IUser[];
+
+  try {
+    dbUser = await User.find({ name: userToLogin.name });
+
+    if (dbUser.length === 0) {
+      throw new Error();
+    }
+  } catch (error) {
+    customError.code = 400;
+    customError.message = error.message;
+    customError.privateMessage = "User not found";
+    next(customError);
+  }
+
+  const dbPassword = dbUser[0].password;
+};
