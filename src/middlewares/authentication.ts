@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
+import { verifyToken } from "../utils/auth";
 import { CustomError } from "../utils/CustomError";
 
 export interface CustomRequest extends Request {
@@ -19,7 +20,7 @@ const authentication = (
     customError.message = "Bad request";
     customError.privateMessage = "Authentication Error";
     customError.code = 500;
-    next(error);
+    next(customError);
     return;
   }
 
@@ -31,7 +32,7 @@ const authentication = (
     customError.message = "Authentication Error";
     customError.privateMessage = "Invalid token";
     customError.code = 500;
-    next(error);
+    next(customError);
     return;
   }
 
