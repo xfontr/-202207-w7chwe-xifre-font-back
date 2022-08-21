@@ -81,7 +81,9 @@ export const signUp = async (
     return;
   }
 
-  res.status(200).json({ newUser });
+  const userWithId: IUser = await User.findById(newUser.id);
+  const token = await prepareToken(userWithId);
+  res.status(200).json({ newUser, token });
 };
 
 export const signIn = async (
