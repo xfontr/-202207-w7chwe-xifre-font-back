@@ -32,8 +32,8 @@ export const userSchema = new Schema({
     required: true,
   },
   contacts: {
-    friends: [Schema.Types.ObjectId],
-    enemies: [Schema.Types.ObjectId],
+    friends: [String],
+    enemies: [String],
   },
 });
 
