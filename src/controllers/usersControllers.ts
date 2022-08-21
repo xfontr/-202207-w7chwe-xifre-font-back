@@ -26,6 +26,36 @@ const prepareToken = (user: IUser) => {
   };
 };
 
+const isContact = (
+  option: "add-friend" | "add-enemy",
+  friends: [string],
+  enemies: [string],
+  friendId: string
+): boolean => {
+  let matches;
+  switch (option) {
+    case "add-friend":
+      matches = friends.filter((friend: string) => friend === friendId);
+
+      if (matches.length === 0) {
+        return true;
+      }
+      break;
+
+    case "add-enemy":
+      matches = enemies.filter((enemy: string) => enemy === friendId);
+
+      if (matches.length === 0) {
+        return true;
+      }
+      break;
+
+    default:
+      return false;
+  }
+  return false;
+};
+
 export const signUp = async (
   req: Request,
   res: Response,
@@ -144,4 +174,55 @@ export const allUsersData = async (
   }
 
   res.status(200).json({ users: dbUsers });
+};
+
+export const addContact = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { option, id, friendId } = req.params;
+  const options = option as "add-friend" | "add-enemy";
+
+  let userRequesting;
+  let userRequestingFriends: [string];
+  let userRequestingEnemies: [string];
+
+  try {
+    userRequesting = await User.findById(id);
+    const leanUserRequesting = await User.findById(id).lean();
+    userRequestingFriends = leanUserRequesting.contacts.friends as [string];
+
+    userRequestingEnemies = leanUserRequesting.contacts.enemies as [string];
+
+    await User.findById(friendId);
+  } catch (error) {
+    customError.code = 400;
+    customError.message = "Unable to add contact";
+    customError.privateMessage = "At least one of the users was not found";
+    next(customError);
+    return;
+  }
+
+  const isAlreadyContact = isContact(
+    options,
+    userRequestingFriends,
+    userRequestingEnemies,
+    friendId
+  );
+
+  if (!isAlreadyContact) {
+    customError.code = 400;
+    customError.message = "Unable to add contact";
+    customError.privateMessage = "ID already in user contact list";
+    next(customError);
+    return;
+  }
+  const list = options === "add-friend" ? "friends" : "enemies";
+
+  userRequesting.contacts[list] = [...userRequesting.contacts[list], friendId];
+
+  await userRequesting.save();
+
+  res.status(200).json({ addedToContacts: friendId });
 };
